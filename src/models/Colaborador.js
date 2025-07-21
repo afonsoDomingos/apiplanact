@@ -2,9 +2,10 @@ import mongoose from 'mongoose'
 
 const colaboradorSchema = new mongoose.Schema({
   nome: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
   cargo: String,
-  criadoEm: { type: Date, default: Date.now }
+  email: { type: String, required: true, unique: true },
+  telefone: String,
+  departamento: String
 })
 
 export default mongoose.model('Colaborador', colaboradorSchema)
