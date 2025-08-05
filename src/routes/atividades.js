@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 // POST criar nova atividade
 router.post('/', async (req, res) => {
   try {
-    const novaAtividade = new Atividade(req.body);
+    const novaAtividade = new Atividade(req.body);s
     const salva = await novaAtividade.save();
     res.status(201).json(salva);
   } catch (error) {

@@ -17,5 +17,4 @@ const atividadeSchema = new mongoose.Schema({
   duracao: { type: Number, default: 0 }, // em horas
   prazo: Date,
 }, { timestamps: true })
-
 export default mongoose.model('Atividade', atividadeSchema)
