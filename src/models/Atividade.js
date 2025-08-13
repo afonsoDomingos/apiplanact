@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const atividadeSchema = new mongoose.Schema({
   titulo: { type: String, required: true },
@@ -14,7 +14,8 @@ const atividadeSchema = new mongoose.Schema({
     enum: ['baixa', 'media', 'alta'], 
     default: 'media' 
   },
-  duracao: { type: Number, default: 0 }, // em horas
+  duracao: { type: Number, default: 0 },
   prazo: Date,
-}, { timestamps: true })
-export default mongoose.model('Atividade', atividadeSchema)
+}, { timestamps: true });
+
+export default (conexao) => conexao.model('Atividade', atividadeSchema);

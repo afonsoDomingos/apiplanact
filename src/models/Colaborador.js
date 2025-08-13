@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const colaboradorSchema = new mongoose.Schema({
   nome: { type: String, required: true },
@@ -6,6 +6,6 @@ const colaboradorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   telefone: String,
   departamento: String
-})
+});
 
-export default mongoose.model('Colaborador', colaboradorSchema)
+export default (conexao) => conexao.model('Colaborador', colaboradorSchema);

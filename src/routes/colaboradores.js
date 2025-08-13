@@ -1,11 +1,12 @@
 import express from 'express'
-import Colaborador from '../models/Colaborador.js'
+import getColaboradorModel from '../models/Colaborador.js'
 
 const router = express.Router()
 
-// ✅ GET todos os colaboradores
+// GET todos os colaboradores
 router.get('/', async (req, res) => {
   try {
+    const Colaborador = getColaboradorModel(req.db)
     const colaboradores = await Colaborador.find()
     res.json(colaboradores)
   } catch (err) {
@@ -13,9 +14,10 @@ router.get('/', async (req, res) => {
   }
 })
 
-// ✅ GET colaborador por ID
+// GET colaborador por ID
 router.get('/:id', async (req, res) => {
   try {
+    const Colaborador = getColaboradorModel(req.db)
     const colaborador = await Colaborador.findById(req.params.id)
     if (!colaborador) {
       return res.status(404).json({ erro: 'Colaborador não encontrado' })
@@ -26,9 +28,10 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// ✅ POST novo colaborador
+// POST novo colaborador
 router.post('/', async (req, res) => {
   try {
+    const Colaborador = getColaboradorModel(req.db)
     const novo = new Colaborador(req.body)
     const salvo = await novo.save()
     res.status(201).json(salvo)
@@ -37,9 +40,10 @@ router.post('/', async (req, res) => {
   }
 })
 
-// ✅ PUT atualizar colaborador
+// PUT atualizar colaborador
 router.put('/:id', async (req, res) => {
   try {
+    const Colaborador = getColaboradorModel(req.db)
     const atualizado = await Colaborador.findByIdAndUpdate(req.params.id, req.body, { new: true })
     if (!atualizado) {
       return res.status(404).json({ erro: 'Colaborador não encontrado para atualização' })
@@ -50,9 +54,10 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// ✅ DELETE colaborador
+// DELETE colaborador
 router.delete('/:id', async (req, res) => {
   try {
+    const Colaborador = getColaboradorModel(req.db)
     const deletado = await Colaborador.findByIdAndDelete(req.params.id)
     if (!deletado) {
       return res.status(404).json({ erro: 'Colaborador não encontrado para exclusão' })

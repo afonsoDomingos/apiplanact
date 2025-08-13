@@ -3,34 +3,38 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
-// ⬇️ Importação das rotas
+// Rotas
 import atividadesRoutes from './routes/atividades.js'
 import colaboradoresRoutes from './routes/colaboradores.js'
 
-// ⬇️ Carrega variáveis de ambiente
 dotenv.config()
-
 const app = express()
 
-// ⬇️ Middlewares globais
 app.use(cors())
 app.use(express.json())
 
-// ⬇️ Conexão ao MongoDB Atlas (sem opções deprecated)
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ Conectado ao MongoDB Atlas')
+// Criar conexões separadas
+const conexoes = {
+  projetoA: mongoose.createConnection(process.env.MONGO_URI_PROJETO_A),
+  projetoB: mongoose.createConnection(process.env.MONGO_URI_PROJETO_B)
+}
 
-    // ⬇️ Inicializa servidor após conexão bem-sucedida
-    const PORT = process.env.PORT || 5000
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor rodando na porta ${PORT}`)
-    })
-  })
-  .catch((err) => {
-    console.error('❌ Erro ao conectar o MongoDB:', err)
-  })
+// Middleware para selecionar a conexão
+app.use((req, res, next) => {
+  const chaveProjeto = req.headers['x-projeto'] // "projetoA" ou "projetoB"
+  if (!conexoes[chaveProjeto]) {
+    return res.status(400).json({ erro: 'Projeto inválido ou não informado' })
+  }
+  req.db = conexoes[chaveProjeto]
+  next()
+})
 
-// ⬇️ Rotas da API
+// Rotas
 app.use('/api/atividades', atividadesRoutes)
 app.use('/api/colaboradores', colaboradoresRoutes)
+
+// Inicializa servidor
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`)
+})
