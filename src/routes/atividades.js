@@ -28,7 +28,6 @@ router.post('/', async (req, res) => {
   }
 })
 
-// PUT atualizar atividade existente
 router.put('/:id', async (req, res) => {
   try {
     const Atividade = getAtividadeModel(req.db)
