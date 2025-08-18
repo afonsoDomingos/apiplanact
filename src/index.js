@@ -17,7 +17,7 @@ app.use(express.json())
 const conexoes = {
   projetoA: mongoose.createConnection(process.env.MONGO_URI_PROJETO_A),
   projetoB: mongoose.createConnection(process.env.MONGO_URI_PROJETO_B),
-  projetoB: mongoose.createConnection(process.env.MONGO_URI_PROJETO_C)
+  projetoC: mongoose.createConnection(process.env.MONGO_URI_PROJETO_C)
 }
 
 // Middleware para selecionar a conexão
