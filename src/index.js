@@ -19,7 +19,8 @@ const conexoes = {
   projetoB: mongoose.createConnection(process.env.MONGO_URI_PROJETO_B),
   projetoC: mongoose.createConnection(process.env.MONGO_URI_PROJETO_C),
   projetoD: mongoose.createConnection(process.env.MONGO_URI_PROJETO_D),
-  projetoE: mongoose.createConnection(process.env.MONGO_URI_PROJETO_E)
+  projetoE: mongoose.createConnection(process.env.MONGO_URI_PROJETO_E),
+  projetoF: mongoose.createConnection(process.env.MONGO_URI_PROJETO_F)
 }
 
 // Middleware para selecionar a conexão
